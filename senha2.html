@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chamada de Senha por Áudio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f8f8f8; /* Cor de fundo padrão */
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #4CAF50; /* Cor de fundo verde */
+      padding: 50px;
+      border-radius: 10px;
+      text-align: center; /* Centralizar conteúdo */
+    }
+    h1 {
+      color: #fff; /* Cor do texto branco */
+      font-weight: bold; /* Fonte em negrito */
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+      text-align: left; /* Alinhar rótulos à esquerda */
+    }
+    label {
+      display: block;
+      font-weight: bold; /* Fonte em negrito para os rótulos */
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #FFA500; /* Cor de fundo laranja */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://meuvaptvupt.com.br/sites/default/files/LOGO%20VAPT%20VUPT_0.png" alt="Vapt Vupt" style="max-width: 50%; height: auto;">
+    <h1>Chamada de Senha por Áudio</h1>
+    <div class="input-group">
+      <label for="nome-input"><b>Nome:</b></label>
+      <input type="text" id="nome-input" placeholder="Digite o nome">
+    </div>
+    <div class="input-group">
+      <label for="senha-input"><b>Senha:</b></label>
+      <input type="text" id="senha-input" placeholder="Digite a senha">
+    </div>
+    <div class="input-group">
+      <label for="guiche-input"><b>Guichê:</b></label>
+      <input type="text" id="guiche-input" placeholder="Digite o número do guichê">
+    </div>
+    <button onclick="falarMensagem()">Falar Mensagem</button>
+  </div>
+
+  <script>
+    function falarMensagem() {
+      const nomeInput = document.getElementById('nome-input').value;
+      const senhaInput = document.getElementById('senha-input').value;
+      const guicheInput = document.getElementById('guiche-input').value;
+
+      const mensagem = `Atenção, ${nomeInput}. Sua senha ${senhaInput} está sendo chamada no guichê ${guicheInput}.`;
+      
+      if ('speechSynthesis' in window) {
+        const speech = new SpeechSynthesisUtterance(mensagem);
+        const voices = window.speechSynthesis.getVoices();
+        
+        // Tentar encontrar uma voz masculina em português
+        const voice = voices.find(voice => voice.lang === 'pt-BR' && voice.name.includes('Masculino'));
+        if (voice) {
+          speech.voice = voice;
+        }
+
+        window.speechSynthesis.speak(speech);
+      } else {
+        alert('Seu navegador não suporta a Síntese de Voz da Web.');
+      }
+    }
+  </script>
+</body>
+</html>
